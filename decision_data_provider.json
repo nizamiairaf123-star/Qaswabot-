@@ -1,0 +1,6 @@
+{
+  "provider": null,
+  "candidate_csv": "data/CUSTOM_UNIVERSE_REFRESHED.csv",
+  "required_fields": ["sector", "industry", "market_cap", "turnover_liquid_ok", "atvr_pct", "frequency_of_trading_pct"],
+  "policy": "No fabricated or placeholder decision-critical values. Missing or stale data blocks trading. Deployment must configure a real provider before refresh."
+}

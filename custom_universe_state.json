@@ -1,0 +1,14 @@
+{
+  "last_successful_update": null,
+  "last_attempt": null,
+  "BOARD_DATA_STALE_PAUSE": true,
+  "last_error": "RELEASE_DATA_READINESS_BLOCK: sector, industry and market_cap are unpopulated; liquidity state absent",
+  "total_symbols": 1057,
+  "active_filters": [
+    "core_business_halal",
+    "non_muslim_board",
+    "price>100",
+    "turnover_liquidity",
+    "strict NSE-EQ"
+  ]
+}

@@ -1,0 +1,5 @@
+FUNDAMENTAL FETCH OK: RELIANCE 12 quarters from https://www.screener.in/company/RELIANCE/consolidated/ at 2026-09-25T12:03:18.470258
+FUNDAMENTAL FETCH OK: RELIANCE 12 quarters from https://www.screener.in/company/RELIANCE/consolidated/ at 2026-09-25T12:03:32.281166
+FUNDAMENTAL FETCH OK: RELIANCE 12 quarters from https://www.screener.in/company/RELIANCE/consolidated/ at 2026-09-25T12:04:09.678562
+FUNDAMENTAL FETCH OK: RELIANCE 12 quarters from https://www.screener.in/company/RELIANCE/consolidated/ at 2026-09-25T12:04:12.458910
+FUNDAMENTAL INGEST OK: RELIANCE fetched=12 stored=12 source=screener.in
