@@ -1,0 +1,28 @@
+============================= test session starts ==============================
+platform linux -- Python 3.13.14, pytest-9.0.3, pluggy-1.6.0 -- /usr/local/bin/python3
+rootdir: /home/user/qaswa/arena_12
+configfile: pytest.ini
+plugins: anyio-4.14.2
+collecting ... collected 19 items
+
+test_p0p1_r38_fixes.py::TestP0_001_OrderIdValidation::test_empty_string_order_id_is_not_success PASSED [  5%]
+test_p0p1_r38_fixes.py::TestP0_001_OrderIdValidation::test_missing_order_id_is_not_success PASSED [ 10%]
+test_p0p1_r38_fixes.py::TestP0_001_OrderIdValidation::test_paper_mode_unaffected PASSED [ 15%]
+test_p0p1_r38_fixes.py::TestP0_001_OrderIdValidation::test_valid_order_id_is_success PASSED [ 21%]
+test_p0p1_r38_fixes.py::TestP0_002_ForeverOrderIdValidation::test_missing_forever_id_is_not_success PASSED [ 26%]
+test_p0p1_r38_fixes.py::TestP0_002_ForeverOrderIdValidation::test_paper_mode_unaffected PASSED [ 31%]
+test_p0p1_r38_fixes.py::TestP0_002_ForeverOrderIdValidation::test_valid_forever_id_is_success PASSED [ 36%]
+test_p0p1_r38_fixes.py::TestP1_001_ParityFailClosed::test_parity_exception_marks_result_invalid_end_to_end PASSED [ 42%]
+test_p0p1_r38_fixes.py::TestP1_001_ParityFailClosed::test_successful_parity_is_still_valid PASSED [ 47%]
+test_p0p1_r38_fixes.py::TestP1_004_TelegramHttpStatusChecked::test_2xx_response_is_not_logged_as_failure PASSED [ 52%]
+test_p0p1_r38_fixes.py::TestP1_004_TelegramHttpStatusChecked::test_non_2xx_response_is_treated_as_failure PASSED [ 57%]
+test_p0p1_r38_fixes.py::TestP1_002_MorningRearmEscalation::test_failed_rearm_triggers_reconciliation_hold PASSED [ 63%]
+test_p0p1_r38_fixes.py::TestP1_002_MorningRearmEscalation::test_successful_rearm_does_not_trigger_hold PASSED [ 68%]
+test_p0p1_r38_fixes.py::TestP1_003_StartupReconciliationNotAutoCleared::test_normal_boot_still_sets_exit_only PASSED [ 73%]
+test_p0p1_r38_fixes.py::TestP1_003_StartupReconciliationNotAutoCleared::test_reconciliation_hold_survives_successful_reboot_with_positions PASSED [ 78%]
+test_p0p1_r38_fixes.py::TestP0_003_UnprotectedPositionBlocksContinuation::test_gtt_failure_blocks_broadcast_and_copy_trade_and_holds PASSED [ 84%]
+test_p0p1_r38_fixes.py::TestP0_003_UnprotectedPositionBlocksContinuation::test_gtt_success_continues_normally PASSED [ 89%]
+test_p0p1_r38_fixes.py::TestP0_002b_SubscriberForeverOrderIdValidation::test_missing_forever_id_is_not_success PASSED [ 94%]
+test_p0p1_r38_fixes.py::TestP0_002b_SubscriberForeverOrderIdValidation::test_valid_forever_id_is_success PASSED [100%]
+
+============================== 19 passed in 2.94s ==============================

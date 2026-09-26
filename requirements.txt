@@ -1,0 +1,28 @@
+# NOTE (Section 5 audit, FIX-D): these packages are intentionally unpinned here
+# because this audit could not safely test/verify exact compatible version
+# numbers without internet access. After your first successful deploy, run
+# `bash scripts/freeze_requirements.sh` to generate requirements-lock.txt with
+# your actual working versions, and use that for all future deploys instead.
+# [FIX-LIST 2026-09-04 item 6] APScheduler pinned: 3.x is required — v4 has a
+# different API (no AsyncIOScheduler.add_job signature parity). The bot was
+# tested with 3.11.3 (see requirements-lock.txt). Scheduler now starts INSIDE
+# the running asyncio loop (bot.py post_init) — no fallback timer exists.
+APScheduler==3.11.3
+beautifulsoup4
+cryptography
+dhanhq
+python-dotenv
+hmmlearn
+httpx
+matplotlib
+numpy
+optuna
+pandas
+pytz
+reportlab
+requests
+scikit-optimize
+scipy
+python-telegram-bot
+pyarrow
+yfinance

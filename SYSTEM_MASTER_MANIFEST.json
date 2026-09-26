@@ -1,0 +1,585 @@
+{
+  "meta": {
+    "file": "SYSTEM_MASTER_MANIFEST.json",
+    "purpose": "QASWA BOT ka SINGLE SOURCE OF TRUTH \u2014 naya AI/owner sirf ye + feature_sequence.json padhe. Har system domain, uske chained files, aur uska verification yahan registered hai. test_sequence.py is manifest ko khud verify karta hai (listed command missing \u2192 test FAIL; domain missing verification \u2192 FAIL). Koi cheez reverse/hatne pe test pakad lega.",
+    "version": "6.1",
+    "date": "2026-09-25 (r40-phase6-complete-2160 \u2014 Phase 1 frac_diff + Phase 2 purged CPCV + Phase 3 DSR + Phase 4 fundamental 2160 real parser + technical Dhan-only 5y/90d/30d + Phase 5 volume/dollar bars + Phase 6 vector-norm L1/L2 sector neutralization)",
+    "owner_constitution": [
+      "Long-only CNC delivery swing, not MIS (no short/F&O/margin/interest) \u2014 Sharia. Entry LIMIT CNC @ bot price; exit MARKET CNC only 09:15-15:30 (Dhan AMO has no MARKET). Overnight hold + GTT. BE/T2T skipped (same-day exit banned, not an MIS switch)",
+      "Core Business 100% Halal + 100% Non-Muslim Board (nahi to trade BLOCK, fail-closed)",
+      "Price > 100 + Liquid (MSCI ATVR/FoT) + strict NSE-EQ",
+      "Sirf 4 owner constants: \u20b93000 fee (\u20b93105 payment amount), \u20b920,000 goal (benchmark only), 2% daily-loss cap, 10% max portfolio DD ceiling",
+      "Har number ka source documented (PARAM_SOURCES) \u2014 bina source = test FAIL",
+      "Koi bhi phase/regime me trade sirf optimization-proven edge pe \u2014 warna block",
+      "Backtest == paper == live parity (same filters + same sizing chain)",
+      "Exit kabhi band nahi; sirf bot-dili (ledger) positions exit hoti hain",
+      "Heavy kaam trading window (09:15-15:30) ke bahar \u2014 pre-market/background + cache. Real BUY/SELL only inside 09:15-15:30 (Dhan AMO has no MARKET)",
+      "Profit lock: profit reach hone ke baad lalach me loss me exit = GALAT",
+      "Exit toolkit: lock/trail sirf EK tool \u2014 OPTIMIZER decide karega (5% ya 50%)",
+      "First priority: kal ke top gainers aaj pakadna (research-verified signals)",
+      "Guides sirf bot ke ANDAR (downloadable NAHI \u2014 safety)",
+      "QASWA Remix / SEQ architecture identity (added 2026-09-07, owner-supplied): combined architecture = QASWA Remix (owner AIRAF NIZAMI); mandatory gate order Business Halal Filter -> Non-Muslim Board Filter -> SEQ (internal label for the systematic/quant industry-alignment layer, not a claimed official methodology name) -> trade decision; SEQ components cite genuine verified method/creator where attributable, no invented single creator; QASWA Remix ownership covers the combined architecture only, underlying verified methodologies keep their own attribution. Full statement: prd.md Rule 14.",
+      "NIZAMI Data Segregation & Accumulation Protocol / NDSAP (refined 2026-09-13, owner AIRAF NIZAMI, supersedes the 2026-09-08 'Live Data Accumulation' registration in full, REGISTERED NOT YET IMPLEMENTED): (A) Dhan-exclusive no-substitute for trading-decision data (OHLCV/price/volume) -- reaffirms existing DATA_SOURCE_POLICY.md (Q014), fails closed if Dhan cannot supply, never substituted from any other source; (B) broadened alternate sourcing (NSE, Moneycontrol, yfinance -- was yfinance-only) for non-Dhan-available decision-support fields ONLY (sector/industry/market_cap etc, Q034), Dhan checked first, never for price/volume; (C) immutable append-only archive (raw payload, arrival timestamp, provider event timestamp, symbol/exchange, provider/API version, sequence number, content hash) of live data actually received, for future backtest/validation/alignment/research use, structural as-of enforcement, no retroactive-history claim. Pre-implementation blockers: ToS review for yfinance/NSE/Moneycontrol storage/reuse, retention estimate. Attribution: NDSAP is an original method authored by AIRAF NIZAMI, no external methodology claimed. Full statement: prd.md Rule 15, SYSTEM_BLUEPRINT.md section 9, QASWA_AUDIT_QA_STATUS.md Q037.",
+      "Decision & Market-Context Telemetry / 'Black Box' flight-data-recorder (added 2026-09-15, r30, owner-conceived spec; NEW Rule 16 \u2014 unrelated to the old Rule 16 deleted 2026-09-13): every scan records the market photo the broker doesn't give (budgeted bid/ask spread at candidates/entries, sector ranks, regime, SEBI ASM/GSM blocked list, gate outcomes) and every decision-reached symbol records WHY it was taken/rejected with signal JSON + input bars + version stamps for deterministic replay. Silent watcher: strictly passive, never in the order/SL path, fail-OPEN everywhere \u2014 any telemetry failure costs at most one audit-log line and zero trading impact. Append-only SQLite (data/telemetry.db, triggers block DELETE/UPDATE), no compaction. IMPLEMENTED + TESTED r30-r31 (test_telemetry.py 21/21). Owner-side audit alias 'PIT Telemetry' = this same capability (owner-confirmed r31); replay reads are PIT-guarded structurally (read_asof requires explicit as-of, no default \u2014 lookahead-bias block, mirrors NDSAP). See prd.md Rule 16, SYSTEM_BLUEPRINT.md \u00a711, Q038 (new).",
+      "Fundamental + Technical robust strategy (R39 CORRECTED \u2014 REAL ONLY, PIT-SAFE, FAIL-CLOSED): Business Halal \u2192 Non-Muslim Board (weekly verification 09:00-15:30, missing/stale \u2192 BLOCK) \u2192 Fundamental Quality (REAL ONLY from screener.in/nse.in/bse.in, source\u2192retrieval\u2192period\u2192publication\u2192as-of\u2192transformation\u2192feature\u2192decision, synthetic banned from production, only test fixtures with source=synthetic_test_fixture) \u2192 Technical/SEQ alignment (same methodology backtest/live) \u2192 Fundamental\u00d7Technical confirmation (final_alignment_decision, fundamental_status, technical_status, rejection_reason traceable) \u2192 Sector/Regime/FII-DII/OrderBook \u2192 Risk & liquidity \u2192 Entry \u2192 1:1.8 RR \u2192 1.8R lock \u2192 uncapped trailing. Missing/invalid required fundamental \u2192 NO TRADE (fail-closed), not PASS/NEUTRAL. No future leakage (AS_OF(T) strict)."
+    ],
+    "read_order_for_new_ai": [
+      "0. prd.md",
+      "1. SYSTEM_MASTER_MANIFEST.json",
+      "2. feature_sequence.json",
+      "3. AI_ONBOARDING.md",
+      "4. UPDATE_HISTORY_FIX_LOG.md",
+      "5. test_sequence.py",
+      "6. docs/CANONICAL_RELEASE_AND_AUDIT_TRUTH_INDEX.md",
+      "docs/PRE_VPS_GATE_PROFILE_v1.0.md",
+      "7. MASTER_AUDIT_EXECUTION_AND_SCORECARD.md",
+      "8. docs/MASTER_ZERO_OMISSION_ZIP_INSPECTION_CONSTITUTION_55_SECTIONS.md",
+      "9. docs/AUDIT_55_EXECUTION_SCORECARD.md",
+      "10. RELEASE_ARTIFACT_STATUS.md",
+      "docs/PRE_VPS_FINAL_INSPECTION_REPORT_v1.0.md",
+      "AUDIT_INTEGRITY_MANIFEST_SHA256.json",
+      "scripts/pre_vps_engineering_preflight.py"
+    ],
+    "hardcode_audit": "HARDCODED_NUMBER_AUDIT.md (33 items \u2014 D33 v5.8.2 order-wait) \u2014 watchdog test enforce karta hai",
+    "phd_audit": "PHD_LEVEL_AUDIT.md \u2014 F1-F10 fixed in v5.8 (F3 survivorship = phase-2 open)",
+    "v5_8_x_notes": "v5.8.1 = dead-code cleanup (paper_trade_manager DELETE + watchdog); v5.8.2 = order-pending wait config migration (ENGINEERING category); v5.9 = ENTRY FOLLOW MODE + SHADOW LOG (owner D28: pending order RESTING rahega \u2014 broker CMP touch pe fill; optimizer-geometry point-of-no-return \u2192 cancel; sirf execution rule, strategy/RR/optimizer zero touch; shadow data se risk_units refinement, approval sirf owner)",
+    "release_identity": "QASWA BOT v6.1-r40-phase6-complete-2160",
+    "audit_truth_index": "docs/CANONICAL_RELEASE_AND_AUDIT_TRUTH_INDEX.md",
+    "audit_constitution": "docs/MASTER_ZERO_OMISSION_ZIP_INSPECTION_CONSTITUTION_55_SECTIONS.md",
+    "audit_execution_contract": "MASTER_AUDIT_EXECUTION_AND_SCORECARD.md",
+    "audit_current_scorecard": "docs/AUDIT_55_EXECUTION_SCORECARD.md",
+    "current_release_verdict": "PRE-VPS ENGINEERING PASS CANDIDATE; AFTER-VPS EXTERNAL VERIFICATION PENDING",
+    "inspection_authority": "FINAL_MASTER_INSPECTION_CERTIFICATION_STANDARD_v1.1.md",
+    "inspection_backbone": "docs/MASTER_ZERO_OMISSION_ZIP_INSPECTION_CONSTITUTION_55_SECTIONS.md",
+    "authority_chain": "55 Sections \u2192 Quality/Defect Gate \u2192 Evidence Classification \u2192 Release Verdict",
+    "certification_status": "PRE-VPS engineering gate assessed separately from AFTER-VPS external/runtime certification",
+    "read_order": [
+      "1. FINAL_MASTER_INSPECTION_CERTIFICATION_STANDARD_v1.1.md",
+      "2. docs/MASTER_ZERO_OMISSION_ZIP_INSPECTION_CONSTITUTION_55_SECTIONS.md",
+      "docs/PRE_VPS_GATE_PROFILE_v1.0.md",
+      "3. prd.md",
+      "4. SYSTEM_BLUEPRINT.md",
+      "5. SYSTEM_MASTER_MANIFEST.json",
+      "6. feature_sequence.json",
+      "7. docs/CANONICAL_RELEASE_AND_AUDIT_TRUTH_INDEX.md",
+      "8. current evidence reports (reference only; never override frozen standard)"
+    ],
+    "pre_vps_gate_profile": "docs/PRE_VPS_GATE_PROFILE_v1.0.md",
+    "current_pre_vps_verdict": "PRE-VPS ENGINEERING PASS CANDIDATE \u2014 external/VPS verification deferred by phase boundary"
+  },
+  "domains": [
+    {
+      "id": 1,
+      "name": "canonical_pipeline",
+      "what": "Stage 0-11 canonical sequence: Sharia Universe \u2192 Startup \u2192 Admin \u2192 Data \u2192 Analysis \u2192 Strategy/Optimize \u2192 Validation \u2192 Deployment \u2192 Paper \u2192 Live \u2192 Copy \u2192 Monitoring",
+      "files": [
+        "feature_sequence.json",
+        "bot_state_manager.py",
+        "workflow_manager.py"
+      ],
+      "verification": [
+        "test_sequence.py: stage ids sequential 0..11",
+        "test_sequence.py: SEQ MATCH single-source"
+      ],
+      "status": "PASS \u2014 12 stages, v5.6"
+    },
+    {
+      "id": 2,
+      "name": "workflow_gates",
+      "what": "simulation (admin result dekh ke decide) \u2192 deployment approval \u2192 paper \u2192 live. /deployapprove sirf simulation-done ke baad. Paper gate = approval + simulation dono.",
+      "files": [
+        "workflow_manager.py",
+        "deployment_manager.py",
+        "intraday_filter.py"
+      ],
+      "verification": [
+        "test_sequence.py: simulation BEFORE deployment approval",
+        "test_sequence.py: approve enforces simulation-done"
+      ],
+      "status": "PASS (v4.1 + v5.0 enforcement)"
+    },
+    {
+      "id": 3,
+      "name": "sharia_universe",
+      "what": "Master 2158 \u2192 monthly inspection (Core Halal \u2192 100% Board \u2192 Price>100 \u2192 Liquid \u2192 NSE-dedup) = CUSTOM ~1080. Fail \u2192 BOARD_DATA_STALE_PAUSE (sab BUY block) + daily retry. Runtime defense-in-depth.",
+      "files": [
+        "stock_selector.py",
+        "board_manager.py",
+        "board_filter_auto.py",
+        "liquidity_screen.py",
+        "sharia_manager.py",
+        "scheduler.py",
+        "dhan_client.py",
+        "market_metadata.py"
+      ],
+      "verification": [
+        "test_sequence.py: master 2158 + custom >1000 + sab core/board True",
+        "test_sharia_and_validation.py"
+      ],
+      "status": "PASS | R39 CORRECTED REAL ONLY PIT FAIL-CLOSED"
+    },
+    {
+      "id": 4,
+      "name": "data_engineering",
+      "what": "Daily cache (10x fast), data sanity (close>0, gap warn), pre-market heavy jobs (08:00-09:11), MTF topup 15:45. India macro auto-refresh (monthly, fail-open).",
+      "files": [
+        "dhan_data.py",
+        "scheduler.py",
+        "corporate_actions.py",
+        "macro_refresh.py",
+        "dhan_live_feed.py"
+      ],
+      "verification": [
+        "test_sequence.py: daily cache + sanity paths (v5.0 checks)",
+        "test_golden.py: sanity"
+      ],
+      "status": "PASS"
+    },
+    {
+      "id": 5,
+      "name": "market_analysis",
+      "what": "Regime (Nifty HMM Hamilton 1989 + DS fusion, 4 evidences), sector STRONG-only, FII T-1 PIT, correlation bands, LM news (cache), economics brain, portfolio health.",
+      "files": [
+        "market_regime.py",
+        "regime_manager.py",
+        "sector_strength.py",
+        "fii_dii_tracker.py",
+        "correlation_tracker.py",
+        "news_analyzer.py",
+        "economics_brain.py",
+        "portfolio_health.py",
+        "mtf/__init__.py",
+        "mtf/bulk_download.py",
+        "mtf/derive.py",
+        "mtf/guards.py",
+        "mtf/probe_depth.py",
+        "mtf/stats.py",
+        "mtf/timeframes.py",
+        "mtf/tournament.py",
+        "mtf/warehouse.py"
+      ],
+      "verification": [
+        "test_sequence.py: regime combine exact (golden 1.15)",
+        "test_golden.py: LM lexicon exact counts"
+      ],
+      "status": "PASS"
+    },
+    {
+      "id": 6,
+      "name": "strategy_optimization",
+      "what": "Phase gate (per-stock per-phase t-test edge proof), 11 signal tools (ema_cross, rsi_ema, breakout, support_bounce, vwap_bounce, bollinger_reversion, connors_rsi2, rsi_divergence, volume_divergence, candle_volume, mtf_composite) + PER-STOCK TOOL PARITY (ANY 1..11 SELECTED TOOLS PER STOCK) + Optuna/skopt Bayesian, per-stock params, WFV (WFE>=0.5), RuFlo ranking, parameter stability.",
+      "files": [
+        "strategy.py",
+        "strategy_tools.py",
+        "optimizer.py",
+        "per_stock_params.py",
+        "walk_forward_validator.py",
+        "ruflo_ranker.py"
+      ],
+      "verification": [
+        "test_golden.py: edge test exact values",
+        "test_sequence.py: connors + trail params in search space"
+      ],
+      "status": "PASS"
+    },
+    {
+      "id": 7,
+      "name": "validation",
+      "what": "Backtest (parity R1-R4 + sector PIT archive), Monte Carlo deploy gate, /simulate (admin+subscriber, live-sizing parity), strategy validator (drift), staleness 90/180.",
+      "files": [
+        "backtester.py",
+        "parity_engine.py",
+        "monte_carlo.py",
+        "simulate_engine.py",
+        "strategy_validator.py"
+      ],
+      "verification": [
+        "test_sequence.py: parity chain runs + simulation mirrors sizing chain",
+        "test_simulate_engine.py (3/3)"
+      ],
+      "status": "PASS"
+    },
+    {
+      "id": 8,
+      "name": "deployment",
+      "what": "Proposal (WFV-valid only) \u2192 /deployapprove (8-layer validation + MC gate) \u2192 commit (rollback-safe) \u2192 /deployrollback revert. Staged capital 10/25/50/100% auto-advance (win-rate driven).",
+      "files": [
+        "deployment_manager.py",
+        "capital_manager.py"
+      ],
+      "verification": [
+        "test_sequence.py: rollback exists + approve enforcement",
+        "test_scheduler_jobs.py: stage auto-advance (3/3)"
+      ],
+      "status": "PASS"
+    },
+    {
+      "id": 9,
+      "name": "order_execution",
+      "what": "CNC swing only (never MIS, no 15:20 square-off). Entry LIMIT CNC at bot signal price + Exit MARKET CNC \u2014 DONO pe fill verify. Real BUY/SELL only 09:15-15:30 IST (Dhan AMO has no MARKET); after hours GTT protects, retry next open. Exit fill confirm ke BAAD hi GTT-cancel/release/copy. 3-Layer GTT (fixed candle-low SL): L1 strict GTT \u2192 L2 fallback (SL-offset) \u2192 L3 monitor + daily re-arm + reconciliation. Crash-window adopt, double-run PID lock. BE/T2T same-day-exit gate lives in risk_manager/intraday_filter (not an MIS switch). Partial-fill: get_order_fill_snapshot; adopt q_filled>=1 with GTT/floor lock; remainder cancel after PARAMS partial_fill_remainder_timeout_sec (default 10 min); extra fill before timeout is adopted. verify_order_status remains a 2-tuple.",
+      "files": [
+        "trade_engine.py",
+        "broker.py",
+        "forever_order_manager.py",
+        "single_instance.py",
+        "startup_recovery.py",
+        "dhan_client.py",
+        "dhan_live_feed.py"
+      ],
+      "verification": [
+        "test_sequence.py: LMT/MKT + fill verify + 3-layer GTT + re-arm + crash recovery + double-run",
+        "test_golden.py: GTT L2 math + trail follow threshold"
+      ],
+      "status": "PASS"
+    },
+    {
+      "id": 10,
+      "name": "exit_toolkit",
+      "what": "3 trailing modes (optimizer Categorical per-stock): trail | hybrid | ratchet. Legacy fixed_tp normalizes to trailing for compatibility. fixed exactly 1.8R lock; optimizer does not select RR; after lock profit is uncapped. Floor SL kabhi nahi ghat-ta. GTT follow. Backtest == live ek hi engine.",
+      "files": [
+        "exit_engine.py",
+        "trade_engine.py",
+        "optimizer.py",
+        "strategy.py"
+      ],
+      "verification": [
+        "test_golden.py: 1.8R lock + uncapped trail/hybrid/ratchet; legacy fixed_tp compatibility normalization",
+        "test_sequence.py: exit toolkit in optimizer space"
+      ],
+      "status": "PASS"
+    },
+    {
+      "id": 11,
+      "name": "overnight_movers",
+      "what": "FIRST PRIORITY \u2014 kal ke top gainers aaj pakadna. 9 research-verified signals (volume, price, overnight_persistence [Lou/Polk/Skouras 2019 JFE], earnings/PEAD [Ball & Brown 1968], tug_of_war [Akbas et al. 2021 JFE], bulk deals, LM news, depth, FII). 14:00 prefetch \u2192 15:00 scan+entry \u2192 next-day 10:30 exit. DEFAULT OFF \u2014 paper proof (t-test, 30+ trades) ke baad hi live. Exit params mini-optimizer decide karta hai.",
+      "files": [
+        "overnight_movers.py",
+        "scheduler.py",
+        "bot.py"
+      ],
+      "verification": [
+        "test_overnight.py (11/11): fail-closed, exact values, grid optimizer, edge gate",
+        "test_sequence.py: 9 signals + weights sum=1 + disabled-by-default"
+      ],
+      "status": "PASS (paper-proof pending \u2014 market data VPS pe)"
+    },
+    {
+      "id": 12,
+      "name": "risk_capital",
+      "what": "Sizing chain: deployable = balance \u00d7 stage \u00d7 health \u00d7 regime \u2212 SEBI blocked. Half-Kelly daily budget, survival circuit, safety (rapid-loss k* formula-derived), soft-block, correlation caps, spread check (order-book depth). Same-day CNC exit gate (BE/T2T skip via risk_manager/intraday_filter \u2014 not an MIS switch).",
+      "files": [
+        "capital_manager.py",
+        "capital_drawdown_manager.py",
+        "safety_manager.py",
+        "survival_manager.py",
+        "risk_override_manager.py",
+        "risk_manager.py",
+        "stock_mode_manager.py",
+        "sebi_manager.py",
+        "dd_policy.py",
+        "risk_display.py"
+      ],
+      "verification": [
+        "test_sequence.py: risk gate 19 checks + spread check",
+        "test_scheduler_jobs.py",
+        "simulate functional proof (stage\u00d7health\u00d7regime = exact)"
+      ],
+      "status": "PASS"
+    },
+    {
+      "id": 13,
+      "name": "subscriber_lifecycle",
+      "what": "States: PAPER_TRIAL \u2192 LIVE_PENDING_PAYMENT \u2192 LIVE_ACTIVE (28d) \u2192 GRACE (2d: entry band, exit chalu) \u2192 EXPIRED_EXIT_ONLY (sirf ledger exits) \u2192 full-close msg. REVOKED (admin). Term-stacking (jaldi renew \u2192 purane expiry ke baad). View-only statement (download nahi). Copy divergence report. Ledger-only exits (manual positions excluded).",
+      "files": [
+        "subscriber_manager.py",
+        "broker.py",
+        "trade_engine.py"
+      ],
+      "verification": [
+        "test_sequence.py: revoke/can_approve/statement/GRACE flow",
+        "test_scheduler_jobs.py: GRACE + EXPIRED transitions (v5.0 updated)"
+      ],
+      "status": "PASS"
+    },
+    {
+      "id": 14,
+      "name": "payment_system",
+      "what": "Razorpay config-gated: fixed \u20b93105 link (partial OFF, UPI+cards), webhook HMAC signature verify, duplicate-payment guard, refund-event logging, T-2 dual-channel alert, stacking. Disabled-by-default (env keys ke bina 'contact admin').",
+      "files": [
+        "payment.py",
+        "bot.py",
+        "subscriber_manager.py",
+        "crypto_utils.py"
+      ],
+      "verification": [
+        "test_sequence.py: payment module functions + disabled-by-default"
+      ],
+      "status": "PASS (live verify sirf VPS + Razorpay KYC ke baad)"
+    },
+    {
+      "id": 15,
+      "name": "command_interaction",
+      "what": "58 commands (45 admin + 13 subscriber) + 2 callbacks + unknown-command + global error handler. Lifecycle end-to-end: confirm messages (approve \u2192 'activated till DATE', expiry \u2192 GRACE, full-close), revert commands (/deployrollback, /revoke, /resume, /unblock, /exitonly\u2192resume, /killswitch\u2192resume). In-bot guides: /guide + /adminguide (downloadable NAHI).",
+      "files": [
+        "bot.py",
+        "guide_text.py"
+      ],
+      "verification": [
+        "test_sequence.py: /guide /adminguide registered + deploy files",
+        "manifest cross-check: har listed command bot.py me (automated)"
+      ],
+      "status": "PASS"
+    },
+    {
+      "id": 16,
+      "name": "number_provenance",
+      "what": "Har parameter ka source PARAM_SOURCES me (OWNER_POLICY | OPTIMIZER_FALLBACK | VERIFIED_CONVENTION | EXTERNAL_FACT | ENGINEERING). Bina source ka naya number = test FAIL (negative self-test).",
+      "files": [
+        "config.py",
+        "test_sequence.py"
+      ],
+      "verification": [
+        "test_sequence.py: 180 values registered + negative self-test",
+        "test_golden.py: provenance all registered"
+      ],
+      "status": "PASS \u2014 196 registered, 0 missing + hardcode watchdog (2026-09-04 r5)"
+    },
+    {
+      "id": 17,
+      "name": "monitoring_ops",
+      "what": "Daily report 15:35, reconciliation 15:40 (3-case matrix), backup 16:30, weekly review, health check 6h, alert taxonomy (severity + daily dedup), config sanity on startup, auto re-optimize PROPOSAL (default OFF, approval admin). External dead-man ping: HEALTHCHECK_URL GET every healthcheck_interval_min (24/7; empty=skip). Does not replace the 1-min Dhan heartbeat.",
+      "files": [
+        "scheduler.py",
+        "trade_logger.py",
+        "signal_broadcaster.py",
+        "workflow_manager.py",
+        "report_generator.py",
+        "build_pdf_report.py",
+        "database.py",
+        "log_setup.py",
+        "utils.py"
+      ],
+      "verification": [
+        "test_sequence.py: alert dedup + config sanity clean",
+        "test_scheduler_jobs.py"
+      ],
+      "status": "PASS"
+    },
+    {
+      "id": 18,
+      "name": "tests_verification",
+      "what": "Complete test pyramid: test_sequence.py (Stage 0-11 + compliance + constitution + manifest), test_golden.py (known-good exact values), test_overnight.py (scanner golden), unittest suite (sharia/scheduler/simulate), offline phase-gate regression tests are not shipped in this release.",
+      "files": [
+        "test_sequence.py",
+        "test_golden.py",
+        "test_overnight.py",
+        "test_sharia_and_validation.py",
+        "test_scheduler_jobs.py",
+        "test_simulate_engine.py",
+        "test_data_source_policy.py",
+        "test_db_setup.py",
+        "test_entry_follow.py",
+        "test_full_pipeline.py",
+        "test_macro.py",
+        "test_market_metadata.py"
+      ],
+      "verification": [
+        "sab suites green (neechhe status)"
+      ],
+      "status": "sequence 83/83 | units 40 | golden 17/17 | overnight 11/11 | phase 32/32"
+    },
+    {
+      "id": 19,
+      "name": "deploy_readiness",
+      "what": "VPS package: deploy.sh (one-command), start_bot.sh, qaswa-bot@.service (systemd auto-restart), .env.example, VPS_DEPLOYMENT_GUIDE.md, README.md. Double-run guard + timezone verify + config sanity boot pe.",
+      "files": [
+        "deploy.sh",
+        "start_bot.sh",
+        "qaswa-bot@.service",
+        ".env.example",
+        "VPS_DEPLOYMENT_GUIDE.md",
+        "README.md",
+        "single_instance.py",
+        "AI_ONBOARDING.md",
+        "UPDATE_HISTORY_FIX_LOG.md",
+        "scripts/__init__.py",
+        "scripts/live_feed_dry_run.py",
+        "scripts/refresh_decision_data.py",
+        "scripts/release_preflight.py",
+        "scripts/freeze_requirements.sh"
+      ],
+      "verification": [
+        "test_sequence.py: VPS deploy files present",
+        "deploy.sh syntax (bash -n)"
+      ],
+      "status": "PASS \u2014 deployment scripts, service template, onboarding docs and package checks present; final live approval remains workflow-gated."
+    },
+    {
+      "id": 20,
+      "name": "entry_follow_execution",
+      "what": "v5.9 Owner rule (GOAL_DISCUSSION D28, 2026-08-20): entry pending order RESTING rahega (cancel nahi) \u2014 broker CMP level pe touch karte hi khud execute karega (bot latency ka koi role nahi). Cancel level = entry_follow_risk_units \u00d7 (entry\u2212SL) optimizer geometry \u2014 point-of-no-return paar \u2192 CANCEL (capital free, dusra stock). SIRF order-pending execution rule \u2014 strategy/RR/optimizer ZERO touch. Shadow log: sab BUY signals ka din-bhar price path (observation-only, koi order nahi) \u2192 daily report + risk_units recommendation (approval sirf owner, auto-change kabhi nahi).",
+      "files": [
+        "entry_follow.py",
+        "shadow_log.py",
+        "trade_engine.py",
+        "scheduler.py",
+        "config.py"
+      ],
+      "verification": [
+        "test_sequence.py: v5.9 wiring checks (register/tick/shadow/EOD/modules/compile)",
+        "test_entry_follow.py: adopt/cancel/hold/race/no-price + shadow bucket math",
+        "test_golden.py: PARAM_SOURCES all registered"
+      ],
+      "status": "PASS (v5.9)"
+    },
+    {
+      "id": 21,
+      "name": "seq_rule14_alignment",
+      "what": "QASWA Remix / SEQ (Rule 14 prd.md) architecture-identity RUNTIME registration. seq_alignment_registry.py declares the mandatory hard-gate order (Business Halal Filter -> Non-Muslim Board Filter -> SEQ -> trade decision) and maps feature_sequence.json Stage 0-11 to their SEQ methodological role. Wired at boot (startup_recovery.run_startup_recovery()) so this is a reachable, executed component, not a dormant file. No new decision logic, no new mandatory feature \u2014 declarative/observational only, fail-open if it errors.",
+      "files": [
+        "seq_alignment_registry.py",
+        "startup_recovery.py",
+        "feature_sequence.json",
+        "prd.md"
+      ],
+      "verification": [
+        "Functional proof (this release): run_startup_recovery() executed end-to-end with stubs -> real data/audit_log.txt line 'SEQ REGISTRY ... loaded at boot' confirmed written, in correct order right after 'STARTUP RECOVERY: Starting...'",
+        "stock_selector.py::_row_is_halal_eligible() independently re-checked: still evaluates core_business_halal before non_muslim_board \u2014 matches Rule 14 gate order in the actual decision code, not just this registry"
+      ],
+      "status": "PASS \u2014 r14, registry created + wired + functionally proven this release"
+    },
+    {
+      "id": 22,
+      "name": "ndsap_data_segregation_accumulation_rule15",
+      "what": "Rule 15 (prd.md) / SYSTEM_BLUEPRINT.md section 9 -- NIZAMI Data Segregation & Accumulation Protocol (NDSAP), owner AIRAF NIZAMI. Refined 2026-09-13 to add: (A) explicit Dhan-exclusive no-substitute rule for price/volume (reaffirms DATA_SOURCE_POLICY.md, no loosening), (B) broadened non-Dhan-field alternate sourcing to NSE/Moneycontrol/yfinance (was yfinance-only), on top of (C) the original point-in-time live-data archive concept. STATUS (r27, 2026-09-13): (C) IMPLEMENTED under explicit owner implementation-authorization (2026-09-13) \u2014 ndsap_archive.py (immutable append-only archive in its own SQLite file data/ndsap_archive.db, separate from key_value_store; Rule-15 fields (a)-(g) per record; structural immutability triggers; structural as-of query guard read_asof; SHA-256 tamper/duplicate detection), read-only fail-soft ingestion taps in dhan_data.py/broker.py/market_metadata.py, 13 executed tests (test_ndsap_archive.py), retention/compaction policy derived from measured per-field volume estimates (NDSAP_RETENTION_ESTIMATE.md). (A) verified as pre-existing runtime (DATA_SOURCE_POLICY.md/Q014 unchanged). (B) NOT IMPLEMENTED \u2014 ToS blocker open; no source-router code exists; the yfinance metadata tap is structurally gated OFF (provider allowlist default ['dhan']) and writes nothing until the owner enables it.",
+      "files": [
+        "prd.md",
+        "SYSTEM_BLUEPRINT.md",
+        "QASWA_AUDIT_QA_STATUS.md",
+        "DATA_SOURCE_POLICY.md",
+        "ndsap_archive.py",
+        "test_ndsap_archive.py",
+        "NDSAP_RETENTION_ESTIMATE.md",
+        "config.py",
+        "dhan_data.py",
+        "broker.py",
+        "market_metadata.py",
+        "VERSION.txt"
+      ],
+      "verification": [
+        "Governance-registration only, verified this session: refined Rule 15/NDSAP text present in prd.md, architecture placement present in SYSTEM_BLUEPRINT.md section 9, tracked as Q037 in QASWA_AUDIT_QA_STATUS.md with STATUS: NOT PROVEN (by design).",
+        "r27 implementation verification (2026-09-13): test_ndsap_archive.py 13/13 executed (fields (a)-(g), payload-unmodified round-trip, as-of guard incl. required-argument TypeError, DELETE/UPDATE trigger rejection, below-API tamper detection, compaction metadata-retention, provider gate off/on, disabled flag, fail-soft unserializable payload, dhan_data raw-payload tap integration); full suite 103 passed / 1 skipped / 0 failed vs pre-change baseline 90/1/0."
+      ],
+      "status": "PARTIAL -- (C) IMPLEMENTED + TESTED (r27, 2026-09-13, owner-authorized); (A) PASS (pre-existing runtime, reaffirmed unchanged); (B) PENDING -- ToS review blocker open, provider-gated OFF by design."
+    },
+    {
+      "id": 23,
+      "name": "decision_telemetry_rule16",
+      "what": "Rule 16 (prd.md) / SYSTEM_BLUEPRINT.md section 11 -- Decision & Market-Context Telemetry ('Black Box' / flight data recorder), owner-conceived spec 2026-09-15, implemented r30. NEW Rule 16 -- unrelated to the old Rule 16 (dual/secondary-engine) deleted 2026-09-13 by owner decision. Four pillars: (1) per-scan market photo the broker doesn't give (regime + sector snapshots from existing caches, SEBI ASM/GSM rejected list, gate outcomes, universe sizes, budgeted bid/ask spread at candidates/entries only -- raw depth already PIT-archived by NDSAP dataset=market_depth); (2) per-decision snapshots with reason + signal JSON for every decision-reached symbol (risk/news rejects, slot-full, blocked-at-execute, recovery, full entry chain incl. order placed/rejected, verify status, resting-follow, safety-cancel); (3) deterministic replay -- input_bars (last N completed daily bars fed to the strategy) + version stamps {revision, params_hash, strategy} + --replay CLI; (4) silent watcher -- strictly passive, never in order/SL path, fail-OPEN everywhere (exception-guarded taps, inert fallback objects, buffered single-transaction writes at scan end). Append-only SQLite data/telemetry.db (own file, Rule-15-C isolation discipline); triggers block DELETE and UPDATE on both tables; no compaction, retain forever (sizing: blueprint section 11). Owner-side audit alias: 'PIT Telemetry' (owner-confirmed r31 = this same capability, not a separate module); PIT component = structural as-of read guard (r31): read_asof/read_scans_asof require explicit as-of (no default, ValueError otherwise), only rows recorded <= as-of visible (lookahead-bias block, mirrors NDSAP read_asof); CLI --as-of. Documented boundaries: no per-symbol-per-scan full-universe rows (silent majority = scan-level counts); spread gated TELEMETRY_SPREAD_CAPTURE + budgeted TELEMETRY_SPREAD_MAX_PER_SCAN=10/scan; exit/follow telemetry = future scope; no SEQ registration (observability, not a methodological-alignment stage -- governance step 6).",
+      "files": [
+        "prd.md",
+        "SYSTEM_BLUEPRINT.md",
+        "QASWA_AUDIT_QA_STATUS.md",
+        "telemetry.py",
+        "test_telemetry.py",
+        "trade_engine.py",
+        "config.py",
+        "VERSION.txt"
+      ],
+      "verification": [
+        "Governance-registration + implementation verified this session (r30, 2026-09-15): Rule 16 text present in prd.md with owner attribution + deletion-disambiguation; architecture placement present in SYSTEM_BLUEPRINT.md section 11 incl. sizing estimate; tracked as NEW Q038 in QASWA_AUDIT_QA_STATUS.md with STATUS: PASS (boundaries documented).",
+        "r30 implementation verification (2026-09-15): test_telemetry.py 18/18 executed (immutability triggers block DELETE+UPDATE on both tables; scan/decision row persistence with version stamps; input-bar tail serialization; disabled-flag inertness; broken-DB fail-open with audit line and no raise; no-active-trace no-op; spread depth parse + per-scan budget enforcement; read/replay/stats filters; CLI subprocess --verify/--stats/--replay; static fail-open guard analysis of every record_decision tap in trade_engine._execute_entry). Full suite 121 passed / 1 skipped / 0 failed (pre-change baseline 103/1/0). Pillar-4 static guarantee: all trade_engine taps exception-guarded; telemetry import failure falls back to inert object; writes buffered and atomic at scan end -- never in order/SL path.",
+        "r31 verification (2026-09-15, owner-side forensic audit of r30 resolved): (a) audit claim 'PIT Telemetry missing' \u2014 content-level scan of all five lineage archives (old upload, owner r28 upload, r27, r29, r30) found zero occurrences of pit_telemetry/6.0.4; owner confirmed alias = Rule 16 telemetry; PIT as-of read guard added + 3 tests (test_telemetry.py 21/21; full suite 124 passed / 1 skipped / 0 failed, r30 baseline 121/1/0). (b) audit claims 3-4 CONFIRMED genuine r30 defect: second inventory manifest AUDIT_INVENTORY_SHA256.json was stale (12 mismatched hashes = exactly the 12 r30-changed files; 2 missing entries) \u2014 regenerated exact (189 entries) and NEW structural preflight check 'inventory manifest' added (full-tree hash+size verification) so the class cannot ship silently again. (c) audit claim 2 (version identity) not a defect: meta.version 6.0.3 + r-number bumps is the frozen lineage convention since r13 (test_sequence asserts == feature_sequence.json)."
+      ],
+      "status": "PASS -- IMPLEMENTED + TESTED (r30-r31, 2026-09-15; owner-conceived spec = owner decision + implementation authorization; PIT alias owner-confirmed r31). Boundaries documented (full-universe per-symbol capture out by design; exit/follow telemetry future scope)."
+    },
+    {
+      "id": 24,
+      "name": "fundamental_technical_robust_r39_corrected",
+      "what": "Fundamental + Technical Robust Strategy (R39 CORRECTED REAL ONLY PIT FAIL-CLOSED): Business Halal \u2192 Board weekly verification \u2192 Fundamental Quality REAL ONLY \u2192 Technical/SEQ \u2192 Fundamental\u00d7Technical confirmation \u2192 Risk \u2192 Entry \u2192 1:1.8 RR \u2192 lock \u2192 trailing",
+      "files": [
+        "fundamental_data.py",
+        "fundamental_sync_engine.py",
+        "trade_engine.py",
+        "backtester.py",
+        "config.py",
+        "scheduler.py",
+        "scheduler_jobs_board_universe.py"
+      ],
+      "verification": [
+        "REAL ONLY: validate_no_synthetic_in_production is_clean=True, purge 2420 mislabeled, no synthetic labeled as screener.in",
+        "PIT: as_of=trade_date strict, announcement_date <= as_of, backtest/live parity same PIT logic",
+        "FAIL-CLOSED: missing\u2192NO TRADE when mandatory, not PASS/NEUTRAL, score -10",
+        "ALIGNMENT: final_alignment_decision, fundamental_status, technical_status, rejection_reason traceable",
+        "BOARD: weekly verification 09:00-15:30, missing/stale \u2192 BLOCK"
+      ],
+      "status": "PASS \u2014 R39 CORRECTED REAL ONLY PIT FAIL-CLOSED",
+      "last_updated": "2026-09-24T23:31:33.322940"
+    }
+  ],
+  "lifecycle_revert_map": {
+    "approve": {
+      "forward": "/approve CHAT_ID",
+      "revert": "/revoke CHAT_ID",
+      "confirm": "subscriber ko 'activated till DATE'"
+    },
+    "deploy": {
+      "forward": "/deployapprove",
+      "revert": "/deployrollback | /deployreject",
+      "confirm": "deploy status + rollback msg"
+    },
+    "killswitch": {
+      "forward": "/killswitch",
+      "revert": "/resume"
+    },
+    "exitonly": {
+      "forward": "/exitonly",
+      "revert": "/resume"
+    },
+    "blocked_stock": {
+      "forward": "auto soft-block",
+      "revert": "/unblock SYMBOL | /unblockall"
+    },
+    "payment": {
+      "forward": "/subscribe (link)",
+      "revert": "refund event \u2192 log + manual",
+      "confirm": "'Payment received \u2014 plan activated till DATE'"
+    },
+    "expiry": {
+      "forward": "28d \u2192 GRACE(2d) \u2192 EXPIRED",
+      "revert": "/subscribe (stacking \u2014 purane expiry ke baad)",
+      "confirm": "GRACE msg \u2192 'Plan Fully Closed'"
+    },
+    "sebi": {
+      "forward": "auto release",
+      "revert": "/setsebi P"
+    }
+  },
+  "vps_first_run_checklist": [
+    "1. deploy.sh chalaya (timezone IST + venv + systemd)",
+    "2. .env values (Telegram token, Dhan client/access token, ENCRYPTION_KEY)",
+    "3. Telegram: /start \u2192 /adminguide \u2192 /settoken",
+    "4. /boardrefresh (pehla real board sync ~2.5 min; fail \u2192 auto retry)",
+    "5. Market close ke baad: /optimize \u2192 /backtest \u2192 /walkforward \u2192 /ruflo",
+    "6. /simulate 200000 \u2192 RESULT REVIEW (approve se pehle \u2014 v4.1 rule)",
+    "7. /deployapprove (sirf satisfied ho ke)",
+    "8. PAPER TRADING 2-4 hafte (PAPER_MODE=True) \u2014 /result /report roz dekho",
+    "9. Overnight movers: config me overnight_enabled=True (paper proof ke liye)",
+    "10. Paper pass \u2192 LIVE_STAGED 10% (auto-advance) \u2192 25 \u2192 50 \u2192 100",
+    "11. Razorpay KYC ke baad: RAZORPAY_* env + webhook URL + TEST mode pehle"
+  ],
+  "hardcode_audit": "FINAL_MASTER_INSPECTION_CERTIFICATION_STANDARD_v1.1.md governs the Quality/Defect and number/derivation rules; docs/MASTER_ZERO_OMISSION_ZIP_INSPECTION_CONSTITUTION_55_SECTIONS.md remains the inspection backbone.",
+  "phd_audit": "FINAL_MASTER_INSPECTION_CERTIFICATION_STANDARD_v1.1.md governs the Quality/Defect and number/derivation rules; docs/MASTER_ZERO_OMISSION_ZIP_INSPECTION_CONSTITUTION_55_SECTIONS.md remains the inspection backbone.",
+  "read_order_for_new_ai": [
+    "1. prd.md",
+    "2. SYSTEM_BLUEPRINT.md",
+    "3. SYSTEM_MASTER_MANIFEST.json",
+    "4. docs/MASTER_ZERO_OMISSION_ZIP_INSPECTION_CONSTITUTION_55_SECTIONS.md",
+    "5. FINAL_MASTER_INSPECTION_CERTIFICATION_STANDARD_v1.1.md",
+    "6. docs/CERTIFICATION_CLOSURE_AND_REINSPECTION_GOVERNANCE_v1.0.md",
+    "6a. docs/AI_INSPECTION_TRIGGER_AND_RESULT_CONTRACT_v1.0.md",
+    "6b. docs/PRE_VPS_VERIFICATION_GATE_v1.0.md",
+    "7. existing evidence/defect registers and fresh audit outputs",
+    "8. actual extracted ZIP: inventory first, then artifact-by-artifact and cross-file execution-path inspection"
+  ]
+}

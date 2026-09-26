@@ -1,0 +1,11 @@
+........................................................................ [ 48%]
+........................................................................ [ 97%]
+...                                                                      [100%]ALERT_SYNC logging failed: [Errno 2] No such file or directory: '/tmp/qaswa_test_sandbox_kg4673ch/data/audit_log.txt'
+
+=============================== warnings summary ===============================
+test_ndsap_archive.py::TestArchiveCore::test_asof_guard_structural
+  /home/user/qaswa/arena_12/test_ndsap_archive.py:113: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
+    naive_utc_plus_1h = datetime.utcnow() + timedelta(hours=1)
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+147 passed, 1 skipped, 1 warning in 5.61s

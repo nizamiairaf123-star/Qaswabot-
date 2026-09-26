@@ -1,0 +1,20 @@
+[Unit]
+Description=QASWA Halal Algo Trading Bot (instance %i)
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=%i
+WorkingDirectory=/opt/qaswa-bot/bot_inspect
+EnvironmentFile=/opt/qaswa-bot/bot_inspect/.env
+ExecStart=/opt/qaswa-bot/bot_inspect/.venv/bin/python /opt/qaswa-bot/bot_inspect/bot.py
+Restart=always
+RestartSec=10
+TimeoutStopSec=30
+KillSignal=SIGINT
+NoNewPrivileges=true
+PrivateTmp=true
+
+[Install]
+WantedBy=multi-user.target
