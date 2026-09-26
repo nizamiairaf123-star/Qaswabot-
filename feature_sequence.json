@@ -1,0 +1,536 @@
+{
+  "meta": {
+    "version": "6.1",
+    "date": "2026-09-25 (r40-phase6-complete-2160 \u2014 Phase 1 frac_diff + Phase 2 purged CPCV + Phase 3 DSR + Phase 4 fundamental 2160 real parser + technical Dhan-only + Phase 5 volume/dollar bars + Phase 6 vector-norm)",
+    "owner_criteria": [
+      "Long-only (CNC delivery, no short/F&O/margin/interest)",
+      "Core Business 100% Halal (Sharia law: no Bank/Riba, Insurance, Alcohol, Tobacco, Gambling, Pork, Adult, Weapons)",
+      "100% Non-Muslim Board of Directors \u2014 nahi to trade BLOCK (fail-closed)",
+      "Price > 100, Liquid (MSCI ATVR + Frequency of Trading), strict NSE-EQ",
+      "Zero hardcoded/magical/arbitrary numbers \u2014 sab optimization ya industry-verified statistics se",
+      "Backtest ~ paper ~ live parity (same filters chain)",
+      "Koi bhi phase/regime me trade sirf optimization-proven edge pe \u2014 warna block",
+      "Time-aware: heavy kaam trading window (09:15-15:30) ke bahar, scan fast-path only"
+    ],
+    "pipeline_goal": "per-stock optimize -> validate (WFV/backtest) -> SIMULATE (admin/subscriber result dekhein) -> result se satisfied -> DEPLOY APPROVE -> paper -> live staged -> copy-trading subscribers",
+    "read_first": "Koi bhi AI ye file sabse pehle padhe \u2014 pura workflow sequence isi me hai.",
+    "number_source_rule": [
+      "Har numeric config number ka source PARAM_SOURCES me registered hona zaroori hai (machine-enforced: test_sequence.py CONSTITUTION check)",
+      "Valid sources: OWNER_POLICY (2%, 20000, 3000 + policy walls) | OPTIMIZER_FALLBACK (optimizer override karta hai) | VERIFIED_CONVENTION (WFE 0.5, alpha 0.10, Connors, MSCI, Pardo) | EXTERNAL_FACT (SEBI/Dhan/fiqh facts) | ENGINEERING (infra/cache)",
+      "Bina source ka naya number = hardcoded = test FAIL = system me entry nahi",
+      "Optimizer derived numbers (data/per_stock_params.json) exempt \u2014 source = optimizer + WFV + deployapprove chain"
+    ],
+    "v5_0_notes": [
+      "Command lifecycle: /deployrollback (revert), /revoke (approve ka revert), /boardrefresh, /statement (view-only), /slippage, /subscribe (payment)",
+      "Approve enforcement: simulation-done + payment + Dhan-link validation; subscriber ko expiry-date confirmation",
+      "Order types: entry LIMIT (signal price) + exit MARKET, DONO pe fill verify; exit fill confirm ke baad hi GTT-cancel/release/copy",
+      "3-Layer GTT (fixed SL, koi trailing nahi): L1 strict SL GTT -> L2 fallback GTT (SL-offset) -> L3 monitor + daily re-arm + reconciliation",
+      "Crash-window safety: pending-order record + boot recovery (adopt/clean)",
+      "Double-run guard: PID lock (single instance)",
+      "Expiry 28+2: GRACE state (entry band, exit chalu, daily renewal alert), T-2 dual-channel alert, term-stacking, full-close message",
+      "Auto-payment: Razorpay fixed-amount link (3105, partial OFF, UPI+cards), webhook signature verify, duplicate guard, renewal link",
+      "Tier 2/3: daily candle cache + sanity, slippage trade-book audit, alert severity+dedup, subscriber view-only statement, copy divergence, auto re-optimize proposal (admin approval intact), golden regression tests, config sanity"
+    ],
+    "guides": [
+      "In-bot guides sirf Telegram messages me (downloadable nahi \u2014 owner safety policy): /guide (subscriber, status-aware), /adminguide (admin runbook)",
+      "VPS deploy files owner-only: VPS_DEPLOYMENT_GUIDE.md, README.md, .env.example, start_bot.sh, qaswa-bot@.service"
+    ],
+    "overnight_movers": [
+      "Phase-2 research module (DEFAULT OFF): halal universe me next-day top movers scan",
+      "Signals: volume surge, price strength, earnings event (PEAD 1968), bulk deals, LM news, depth imbalance, FII/DII",
+      "Time-aware: 14:00 prefetch (heavy) -> 15:00 local scan + entry -> next-day 10:30 exit + outcome tracking",
+      "Proof gate: paper trades ka t-test (same convention as phase gate) \u2014 edge proven pe hi enable",
+      "Owner rule: exit target OPTIMIZER decide karega (grid search on paper outcomes)",
+      "Existing strategy system untouched \u2014 separate module",
+      "v5.5: +2 verified signals \u2014 overnight_persistence (Lou/Polk/Skouras 2019 JFE) + tug_of_war (Akbas et al. 2021 JFE); 9 research signals total"
+    ],
+    "robust_trailing": [
+      "Owner: fixed TP sirf overfit-roki thi; trailing ke saath profit uncapped + optimization robust dono",
+      "Trail params optimizer search space me (trail_multiplier 1.0-3.0, trail_activation_pct 0.0-3.0) \u2014 WFV se out-of-sample validated",
+      "Unified formula: floor SL (candle-low) -> activation -> breakeven lock -> ATR trail (monotonic) -> exit on trail hit; TP cap removed",
+      "GTT follow: broker-side trigger trail ke saath modify (threshold-bounded)",
+      "Parity: backtest == optimizer == live same formula; min_live_win_rate actual R:R se dynamic"
+    ],
+    "exit_toolkit": [
+      "Owner: lock/trail sirf EK tool hai exit ke combinations ka \u2014 OPTIMIZER decide karega (5% ya 50% jo bhi WFV bole)",
+      "exit_engine.py: fixed_tp | trail | hybrid | ratchet \u2014 per-stock Categorical + profit_lock_pct + ratchet_step_pct search space me",
+      "PROFIT-LOCK GUARANTEE: profit reach hone ke baad loss me exit nahi (lalach-safe)",
+      "Parity: backtest == optimizer == live ek hi engine"
+    ],
+    "master_manifest": [
+      "SYSTEM_MASTER_MANIFEST.json = single source of truth: 19 domains + verification + VPS checklist + lifecycle/revert map",
+      "AI_ONBOARDING.md = naya AI ka 5-minute read (rules + file map)",
+      "test_sequence.py in dono ko cross-verify karta hai (listed command missing / version mismatch / domain bina verification = FAIL)"
+    ],
+    "hardcode_migration": [
+      "Owner D7: TP/lock = exactly 1.8R; exit toolkit locks at 1.8R then trails uncapped; candidate priority uses strategy evidence, not RR",
+      "D13: brokerage/statutory config EXTERNAL_FACT single source",
+      "D18: \u20b920000 goal UNTOUCHED (owner: koi use nahi)",
+      "60+ numbers config-driven; D3 DEFAULT_BEHAVIOR + D15 SECTOR_TILT deleted; hardcode watchdog test active"
+    ],
+    "macro_auto_refresh": [
+      "Owner: inflation etc. EXTERNAL_FACT numbers jab real me badle to bot khud update kare (monthly)",
+      "macro_refresh.py: MACRO_SOURCE_URL se fetch \u2192 validate \u2192 data/macro_override.json + PARAMS runtime update",
+      "Monthly job 1st 08:00 + boot apply + stale alert (fail-open)"
+    ],
+    "phd_fixes": [
+      "F1 parity per-slot compounding (8x inflation khatam)",
+      "F2 BH-FDR multiple-testing",
+      "F4 Wilder RSI/ADX canonical",
+      "F5 completed-bar live signals",
+      "F6 honest SL-fill label",
+      "F8 WFE coverage",
+      "F7/F9/F10 labels + config"
+    ],
+    "v6_0_new_features": [
+      "RSI DIVERGENCE: Price Lower Low + RSI Higher Low = bullish reversal (TradingView, MQL5, SaintQuant verified)",
+      "VOLUME DIVERGENCE: Price Lower Low + Volume Decreasing = smart money accumulation",
+      "CANDLE-VOLUME ANALYSIS: Small candle + High volume = accumulation, breakout likely",
+      "MTF COMPOSITE: 5-criteria combined signal (trend + RSI divergence + volume divergence + candle-volume + RSI oversold)",
+      "TOOL PARITY: Optimizer selects any valid 1..11 tool subset independently per stock/phase using OOS/FDR evidence; no fixed TOP-N cap",
+      "SL HUNT PROTECTION: Body close rule + wick analysis + ATR filter \u2014 optimized per stock (wick_multiplier 1.0-3.0)",
+      "CANDLE PATTERN OPTIMIZATION: candle_body_ratio, candle_wick_ratio, candle_confirmation, candle_volume_mult \u2014 all optimized per stock",
+      "MODE SWITCHING: /paper, /live, /livefull commands \u2014 admin can switch anytime",
+      "HELP SYSTEM: Detailed descriptions for all commands \u2014 admin and subscriber",
+      "MTF ENABLED: Multi-timeframe analysis enabled (HTF trend + LTF entry timing)"
+    ],
+    "v5_8_x_notes": [
+      "v5.8.1: dead-code cleanup \u2014 paper_trade_manager.py DELETE + dead-code watchdog (test_sequence)",
+      "v5.8.2: order-pending wait config migration \u2014 ENGINEERING category (broker latency infra; optimize = fake precision kyunki backtest me fill instant hota hai) + watchdog patterns"
+    ],
+    "v5_9_notes": [
+      "ENTRY FOLLOW MODE (owner D28): entry pending order RESTING \u2014 cancel nahi; broker CMP touch pe execute",
+      "Cancel scale = entry_follow_risk_units (1.0 start) \u00d7 (entry\u2212SL) optimizer geometry \u2014 point-of-no-return",
+      "SIRF execution rule \u2014 strategy/RR/optimizer zero touch; koi re-entry nahi (har signal pe EK resting order)",
+      "SHADOW LOG: sab BUY signals ka din-bhar path (observation-only) \u2192 daily report \u2192 risk_units recommendation (owner approval)",
+      "Files: entry_follow.py, shadow_log.py + hooks trade_engine/scheduler + EOD job 15:36"
+    ],
+    "release_identity": "QASWA v6.0.3",
+    "seq_rule14_identity": "SEQ (Rule 14 / QASWA Remix systematic-quant alignment layer, prd.md) is NOT the same 'SEQ' as the SEQ_FILE/SEQ-MATCH shorthand used elsewhere for this sequence registry itself (test_sequence.py, coincidental namesake). Rule-14 SEQ mapping: Stage 0 = PRE_SEQ_HARD_GATES (Business Halal Filter -> Non-Muslim Board Filter, Rule 2/3); Stages 1-2 = INFRA (not a gate, not SEQ); Stages 3-11 = SEQ (systematic/quant alignment layer components). Full per-stage role registry + boot-time trace: seq_alignment_registry.py (wired at startup_recovery.run_startup_recovery())."
+  },
+  "stages": [
+    {
+      "id": 0,
+      "name": "sharia_universe_foundation",
+      "label": "SHARIA UNIVERSE FOUNDATION",
+      "when": "Monthly (1st, 08:00-08:30) + runtime defense-in-depth",
+      "time_class": "PRE-MARKET (heavy)",
+      "description": "Master 2158 permanent list pe monthly inspection: Core Business Halal -> 100% Non-Muslim Board -> Price>100 -> Liquid (MSCI ATVR/FoT) -> NSE-dedup = CUSTOM tradable universe. Fail -> BOARD_DATA_STALE_PAUSE (saare BUY block) + daily retry.",
+      "features": [
+        "F074",
+        "F103"
+      ],
+      "chained_files": [
+        "stock_selector.py",
+        "board_manager.py",
+        "board_filter_auto.py",
+        "liquidity_screen.py",
+        "sharia_manager.py",
+        "scheduler.py"
+      ],
+      "methods": [
+        "Owner Sharia criteria (Core Business Halal + 100% Non-Muslim Board)",
+        "MSCI Global Investable Market Indices Methodology (ATVR + Frequency of Trading)",
+        "Zakat 2.5% above Nisab 87.48g (classical fiqh)"
+      ],
+      "data": [
+        "data/MASTER_STOCK_LIST_PERMANENT.csv",
+        "data/CUSTOM_UNIVERSE_FINAL.csv",
+        "data/scrip_master.csv",
+        "data/board_members_yfinance.json",
+        "data/custom_universe_state.json"
+      ]
+    },
+    {
+      "id": 1,
+      "name": "bot_startup",
+      "label": "BOT STARTUP",
+      "when": "Bot restart (koi bhi time \u2014 scan se pehle complete)",
+      "time_class": "BOOT",
+      "description": "Telegram polling boot -> logging -> DB init -> bot state machine -> startup recovery -> scheduler (19+2 jobs) -> killswitch check.",
+      "features": [
+        "F049",
+        "F070"
+      ],
+      "chained_files": [
+        "bot.py",
+        "log_setup.py",
+        "database.py",
+        "bot_state_manager.py",
+        "startup_recovery.py",
+        "scheduler.py"
+      ],
+      "methods": [
+        "Explicit state machine (owner design)",
+        "APScheduler cron scheduling",
+        "FIX-47 network heartbeat (1 min)"
+      ],
+      "data": [
+        "data/trading_bot.db"
+      ]
+    },
+    {
+      "id": 2,
+      "name": "admin_setup",
+      "label": "ADMIN SETUP",
+      "when": "On-demand (admin commands)",
+      "time_class": "ADMIN",
+      "description": "/start, /help, /settoken (Dhan token), token alerts 08:30/09:00/09:10, scrip master, board admin commands, killswitch controls.",
+      "features": [
+        "F001",
+        "F002",
+        "F017",
+        "F056",
+        "F024"
+      ],
+      "chained_files": [
+        "bot.py",
+        "broker.py",
+        "intraday_filter.py",
+        "config.py"
+      ],
+      "methods": [
+        "Dhan API auth (token)",
+        "NSE scrip master"
+      ]
+    },
+    {
+      "id": 3,
+      "name": "daily_data_collection",
+      "label": "DAILY DATA COLLECTION",
+      "when": "Pre-market 08:30-09:11 daily",
+      "time_class": "PRE-MARKET (medium/heavy)",
+      "description": "08:30 token+scrip master, 08:45 corporate actions, 09:05 sector + FII/DII refresh, 09:10 regime pre-market refresh, 09:11 news pre-fetch cache, 15:45 MTF topup.",
+      "features": [
+        "F056",
+        "F067",
+        "F094",
+        "F095",
+        "F097",
+        "F092",
+        "F098"
+      ],
+      "chained_files": [
+        "scheduler.py",
+        "sector_strength.py",
+        "fii_dii_tracker.py",
+        "market_regime.py",
+        "news_analyzer.py",
+        "corporate_actions.py",
+        "mtf/bulk_download.py",
+        "mtf/derive.py",
+        "mtf/timeframes.py"
+      ],
+      "methods": [
+        "HMM regime refresh (Hamilton 1989)",
+        "Loughran-McDonald 2011 news lexicon pre-fetch",
+        "NSE sector indices scrape",
+        "FII/DII T-1 point-in-time"
+      ],
+      "data": [
+        "data/sector_strength.json",
+        "data/sector_history.json",
+        "data/fii_dii_history.json",
+        "data/market_regime.json",
+        "data/news_sentiment_cache.json"
+      ]
+    },
+    {
+      "id": 4,
+      "name": "market_analysis",
+      "label": "MARKET ANALYSIS",
+      "when": "Runtime (scan pe cached reads only)",
+      "time_class": "FAST (local reads)",
+      "description": "Regime (HMM + multi-factor DS fusion), regime behavior (size multipliers), sector strength (STRONG-only entry), FII/DII sentiment, correlation (stock/VIX/USDINR), news (cache), economics brain, portfolio health.",
+      "features": [
+        "F092",
+        "F093",
+        "F096",
+        "F098",
+        "F082"
+      ],
+      "chained_files": [
+        "market_regime.py",
+        "regime_manager.py",
+        "correlation_tracker.py",
+        "news_analyzer.py",
+        "economics_brain.py",
+        "portfolio_health.py"
+      ],
+      "methods": [
+        "Gaussian HMM (Hamilton 1989)",
+        "Dempster-Shafer evidence fusion (1967/1976)",
+        "Loughran-McDonald 2011 (news)",
+        "correlation bands 0.85 / VIX 0.5 / USDINR -0.4 (verified conventions)"
+      ]
+    },
+    {
+      "id": 5,
+      "name": "strategy_optimization",
+      "label": "STRATEGY + OPTIMIZATION  <-- CURRENT PHASE (paper trading se pehle yahin ho)",
+      "when": "Admin /optimize (market close ke baad ya weekend)",
+      "time_class": "HEAVY (admin-triggered, off-market)",
+      "description": "Strategy framework + signal tools (ema_cross, breakout, support_bounce, bollinger_reversion, connors_rsi2, vwap_bounce, rsi_ema, rsi_divergence, volume_divergence, candle_volume, mtf_composite) + PER-STOCK TOOL PARITY (ANY 1..11 SELECTED TOOLS PER STOCK) -> per-stock Bayesian optimization -> per-stock params -> per-phase edge proof (one-sided t-test) -> phase_allow_* flags -> walk-forward validation (WFE) -> RuFlo ranking -> parameter stability.",
+      "features": [
+        "F084",
+        "F085",
+        "F087",
+        "F106",
+        "F040",
+        "F041",
+        "F045",
+        "F088",
+        "F090"
+      ],
+      "chained_files": [
+        "strategy.py",
+        "strategy_tools.py",
+        "optimizer.py",
+        "per_stock_params.py",
+        "walk_forward_validator.py",
+        "ruflo_ranker.py",
+        "parity_engine.py",
+        "exit_engine.py"
+      ],
+      "methods": [
+        "Optuna TPE / scikit-optimize Bayesian search",
+        "One-sided t-test per-phase edge proof (alpha=0.10 research convention)",
+        "Walk-Forward Efficiency >= 0.5 (Pardo)",
+        "Minervini Trend Template (uptrend)",
+        "Connors RSI-2 (sideways/downtrend)",
+        "Rolling-percentile vol calibration (RegimeFolio)"
+      ],
+      "data": [
+        "data/per_stock_params.json",
+        "data/optimizer_results.json",
+        "data/optimizer_output.json",
+        "data/walk_forward_results.json"
+      ]
+    },
+    {
+      "id": 6,
+      "name": "validation",
+      "label": "VALIDATION (backtest + simulation) \u2014 admin yahin result dekh ke decide karta hai",
+      "when": "Admin /backtest /simulate (off-market)",
+      "time_class": "HEAVY (admin-triggered, off-market)",
+      "description": "Full backtest (parity chain R1-R4 = live-identical) -> Monte Carlo DD -> /simulate (admin + subscriber dono dekh sakte hain \u2014 candidate strategy ka projection, approval pending label ke saath) -> strategy validator (live vs backtest drift) -> backtest staleness (90 warn / 180 block). v4.1: simulation APPROVAL SE PEHLE \u2014 admin result se satisfied ho kar hi agle stage me /deployapprove karega. v4.2 sizing-parity: simulation live jaisi hi scaling pe chalti hai (stage x health x regime) \u2014 isliye simulation ka result paper/live ke actual traded amounts se match karta hai.",
+      "features": [
+        "F018",
+        "F019",
+        "F086",
+        "F003",
+        "F091",
+        "F004"
+      ],
+      "chained_files": [
+        "backtester.py",
+        "parity_engine.py",
+        "monte_carlo.py",
+        "simulate_engine.py",
+        "strategy_validator.py",
+        "test_golden.py"
+      ],
+      "methods": [
+        "Monte Carlo bootstrap (Boyle 1977 / Efron 1979)",
+        "Walk-forward + live drift validation (Pardo family)",
+        "Half-Kelly + Risk Parity sizing (Kelly 1956 / Qian 2005)"
+      ],
+      "data": [
+        "data/backtest_results.json"
+      ]
+    },
+    {
+      "id": 7,
+      "name": "deployment_decision",
+      "label": "DEPLOYMENT DECISION (simulation result se SATISFIED hone ke baad hi approve)",
+      "when": "Admin /deployapprove (off-market) \u2014 sirf jab /simulate ka result acceptable ho",
+      "time_class": "ADMIN (light)",
+      "description": "Deployment proposal (WFV-valid only) -> admin simulation result dekh kar approve/reject (/deployapprove /deployreject) -> per_stock_params + optimizer_output + backtest_results commit -> workflow stage gates -> staged capital 10/25/50/100%. v4.1: approval se pehle simulation zaroori \u2014 galat decision ka risk khatam.",
+      "features": [
+        "F089",
+        "F042",
+        "F043",
+        "F044",
+        "F046",
+        "F066"
+      ],
+      "chained_files": [
+        "deployment_manager.py",
+        "workflow_manager.py",
+        "bot.py"
+      ],
+      "methods": [
+        "Model Risk Management (Fed SR 11-7 spirit)",
+        "Staged deployment (owner design)"
+      ],
+      "data": [
+        "data/pending_deployment.json",
+        "data/deployment_history.json"
+      ]
+    },
+    {
+      "id": 8,
+      "name": "paper_trading",
+      "label": "PAPER TRADING",
+      "when": "Market hours 09:15-15:30, scan har 5 min",
+      "time_class": "FAST-PATH ONLY (cycle budget <= 3 min)",
+      "description": "Scan: universe -> parallel candles -> phase detect -> PHASE GATE (optimization-proven edge) -> per-phase tool signal -> macro filter (FII T-1 -> sector STRONG PIT -> regime fallback) -> dedup -> risk manager 19 checks -> ranking -> sizing -> spread check (order book depth, sirf final candidates) -> paper fill -> GTT forever SL -> monitor 3-min -> daily report -> reconciliation. v4.2 sizing-parity: paper aur live SAME sizing chain (stage x health x regime); har trade me sizing_scale snapshot record hota hai.",
+      "features": [
+        "F071",
+        "F077",
+        "F078",
+        "F052",
+        "F053",
+        "F054",
+        "F062",
+        "F080",
+        "F081",
+        "F099",
+        "F104",
+        "F105",
+        "F083",
+        "F060",
+        "F108"
+      ],
+      "chained_files": [
+        "trade_engine.py",
+        "risk_manager.py",
+        "capital_manager.py",
+        "capital_drawdown_manager.py",
+        "risk_override_manager.py",
+        "survival_manager.py",
+        "safety_manager.py",
+        "stock_mode_manager.py",
+        "sebi_manager.py",
+        "broker.py",
+        "trade_logger.py",
+        "intraday_filter.py",
+        "parity_engine.py",
+        "forever_order_manager.py",
+        "single_instance.py",
+        "exit_engine.py"
+      ],
+      "methods": [
+        "Half-Kelly position sizing (Kelly 1956)",
+        "Risk Parity / Inverse-Vol (Qian 2005)",
+        "Van Tharp velocity circuit breakers + risk budgeting",
+        "Survival circuit (A.D. Roy Safety-First 1952 family)",
+        "Order-book spread gate (Dhan 5-level depth)",
+        "GTT forever SL (broker-side, 3-layer)",
+        "SEBI T+1 100% sell-credit (Oct 2024 rule)"
+      ],
+      "data": [
+        "data/trades.json",
+        "data/signal_registry.json",
+        "data/portfolio_state.json",
+        "data/sebi_blocked.json"
+      ]
+    },
+    {
+      "id": 9,
+      "name": "live_trading",
+      "label": "LIVE TRADING (staged 10/25/50/100%)",
+      "when": "Paper pass ke baad, same market-hours chain",
+      "time_class": "FAST-PATH ONLY",
+      "description": "Same chain + real CNC orders + killswitch + reconciliation matrix + TOKEN_INVALID_PAUSE + stage checks.",
+      "features": [
+        "F072",
+        "F073",
+        "F062",
+        "F024"
+      ],
+      "chained_files": [
+        "trade_engine.py",
+        "broker.py",
+        "bot_state_manager.py",
+        "capital_manager.py",
+        "forever_order_manager.py"
+      ],
+      "methods": [
+        "Dhan CNC delivery + GTT",
+        "Reconciliation action matrix (3 cases)",
+        "Staged live 10->25->50->100% (owner design)"
+      ]
+    },
+    {
+      "id": 10,
+      "name": "copy_trading",
+      "label": "COPY TRADING (subscribers)",
+      "when": "Subscriber lifecycle: /start -> PAPER_TRIAL -> /golive (disclaimer) -> payment -> /approve -> Dhan link -> LIVE_ACTIVE -> copy -> expiry -> EXPIRED_EXIT_ONLY",
+      "time_class": "LIGHT (on-demand + 08:00 expiry job)",
+      "description": "Subscriber registration, trial, risk disclaimer, payment, approval, encrypted Dhan credentials, admin trade copy (BUY/SELL), expiry, broadcast, unlink guard. v5.0: auto-payment (fixed \u20b93105 link, webhook activate), GRACE 28+2 expiry, revoke, view-only statement.",
+      "features": [
+        "F030",
+        "F031",
+        "F032",
+        "F061",
+        "F102",
+        "F079"
+      ],
+      "chained_files": [
+        "subscriber_manager.py",
+        "broker.py",
+        "crypto_utils.py",
+        "signal_broadcaster.py",
+        "bot.py",
+        "payment.py"
+      ],
+      "methods": [
+        "Fernet credential encryption (cryptography std)",
+        "Copy-trade replication (owner design)",
+        "30-day trial / 3000 INR (owner policy)"
+      ],
+      "data": [
+        "data/subscribers.json.migrated"
+      ]
+    },
+    {
+      "id": 11,
+      "name": "monitoring_compliance",
+      "label": "MONITORING & COMPLIANCE (continuous)",
+      "when": "15:35 report, 15:40 reconciliation, 15:45 MTF topup, 16:00 stage check, 16:30 backup, Sat 10:00 weekly review, 6h health check",
+      "time_class": "POST-MARKET / BACKGROUND",
+      "description": "Daily report broadcast, reconciliation, backup, health checks, weekly review, corporate actions, zakat, haram mid-trade policy (running trade untouched, natural exit, post-exit block, auto-restore).",
+      "features": [
+        "F060",
+        "F108",
+        "F021",
+        "F009",
+        "F027",
+        "F103"
+      ],
+      "chained_files": [
+        "trade_logger.py",
+        "build_pdf_report.py",
+        "report_generator.py",
+        "risk_display.py",
+        "sharia_manager.py",
+        "corporate_actions.py",
+        "workflow_manager.py"
+      ],
+      "methods": [
+        "Performance feedback loop (SR 11-7 spirit)",
+        "Backup retention 7 days (owner policy)"
+      ],
+      "data": [
+        "data/audit_log.txt"
+      ]
+    }
+  ],
+  "time_budget_rules": [
+    "Heavy features (network batch / scrape / model) TRADING WINDOW (09:15-15:30) ke andar kabhi nahi \u2014 pre-market (08:00-09:11) ya background + cache.",
+    "Scan cycle (5 min) ka total budget <= 3 min \u2014 parallel candles + local cache reads only.",
+    "Order-book depth sirf ranked final candidates pe, order se turant pehle.",
+    "News trade-time me sirf cache read \u2014 miss/stale = fail-open (supplementary filter).",
+    "Regime trade-time me sirf cache read \u2014 cold refresh sirf 09:10 job me."
+  ],
+  "replace_not_integrate": [
+    "News engine: single LM 2011 lexicon engine (koi TextBlob fallback nahi).",
+    "Universe pipeline: MASTER_STOCK_LIST_PERMANENT.csv is the canonical ~2,158-stock seed; monthly Sharia + owner Board criteria produce CUSTOM_UNIVERSE_FINAL.csv; runtime uses the validated derived universe with fail-closed freshness gates.",
+    "Registry: feature_sequence.json master (docs/test isi se derive).",
+    "Test: single sequence runner (test_sequence.py) \u2014 registry order == test order."
+  ],
+  "global_goals": [
+    "Cross-environment alignment: Backtest/Paper/Live share the same decision contract; observed result drift is measured, not used as a blanket AND gate."
+  ]
+}
